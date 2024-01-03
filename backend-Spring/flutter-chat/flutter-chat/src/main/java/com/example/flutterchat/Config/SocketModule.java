@@ -22,13 +22,10 @@ public class SocketModule {
         server.addConnectListener(onConnected());
         server.addDisconnectListener(onDisconnected());
 
-        server.addEventListener("test", String.class, onTest());
         server.addEventListener("send_message", Message.class, onChatReceived());
     }
 
-    private DataListener<String> onTest() {
-        return (senderClient, data, ackSender) -> {System.out.println(data);};
-    };
+
     private ConnectListener onConnected() {
         return (client) -> {
             System.out.println("connect client");
