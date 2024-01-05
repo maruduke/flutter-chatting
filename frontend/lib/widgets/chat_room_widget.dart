@@ -10,6 +10,6 @@ class chatRoom extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text('test: ${room.name} : ${room.id}');
+    return Text(room.name);
   }
 }

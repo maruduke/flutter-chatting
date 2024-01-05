@@ -36,67 +36,67 @@ class _ChatRoomState extends State<ChatRoomScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.cyan.shade50,
       appBar: AppBar(
         title: Text(roomName),
       ),
-      body: Container(
-        child: Column(
-          children: [
-            Flexible(
-              child: ListView.separated(
-                separatorBuilder: (BuildContext context, int index) =>
-                    const SizedBox(height: 10),
-                reverse: false,
-                itemCount: messages.length,
-                itemBuilder: (context, index) {
-                  if (messages.isNotEmpty) {
-                    if (messages[index].id == socketService.getSocketId()) {
-                      // 자신의 메시지 오른쪽 배치
-                      return MessageBox(
-                        boxColor: Colors.yellow,
-                        isMe: true,
-                        message: messages[index].message,
-                      );
-                    } else {
-                      // 타인의 메시지 왼쪽 정렬
-                      return MessageBox(
-                        boxColor: Colors.white,
-                        isMe: false,
-                        message: messages[index].message,
-                      );
-                    }
+      body: Column(
+        children: [
+          Flexible(
+            child: ListView.separated(
+              separatorBuilder: (BuildContext context, int index) =>
+                  const SizedBox(height: 10),
+              reverse: false,
+              itemCount: messages.length,
+              itemBuilder: (context, index) {
+                if (messages.isNotEmpty) {
+                  if (messages[index].id == socketService.getSocketId()) {
+                    // 자신의 메시지 오른쪽 배치
+                    return MessageBox(
+                      boxColor: Colors.yellow,
+                      isMe: true,
+                      message: messages[index].message,
+                    );
+                  } else {
+                    // 타인의 메시지 왼쪽 정렬
+                    return MessageBox(
+                      boxColor: Colors.white,
+                      isMe: false,
+                      message: messages[index].message,
+                    );
                   }
-                  return const CircularProgressIndicator();
-                },
-              ),
+                }
+                return const CircularProgressIndicator();
+              },
             ),
-            const Divider(
-              height: 1.0,
-            ),
-            Container(
-              child: Row(
-                children: [
-                  Flexible(
-                    child: TextField(
-                      controller: _messageController,
-                    ),
+          ),
+          const Divider(
+            height: 1.0,
+          ),
+          ColoredBox(
+            color: Colors.white,
+            child: Row(
+              children: [
+                Flexible(
+                  child: TextField(
+                    controller: _messageController,
                   ),
-                  IconButton(
-                      onPressed: () {
-                        if (_messageController.text != "") {
-                          debugPrint("onpressed send");
-                          socketService.sendMessage(_messageController.text);
+                ),
+                IconButton(
+                    onPressed: () {
+                      if (_messageController.text != "") {
+                        debugPrint("onpressed send");
+                        socketService.sendMessage(_messageController.text);
 
-                          debugPrint("test");
-                          _messageController.text = "";
-                        }
-                      },
-                      icon: const Icon(Icons.send))
-                ],
-              ),
-            )
-          ],
-        ),
+                        debugPrint("test");
+                        _messageController.text = "";
+                      }
+                    },
+                    icon: const Icon(Icons.send))
+              ],
+            ),
+          )
+        ],
       ),
     );
   }
